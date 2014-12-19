@@ -93,7 +93,8 @@ def prog_compile(name):
     return
   compiled_progs.append(name)
   logging.debug('Compiling %s', name)
-  run(['top'])
+  run(['cat', '/proc/meminfo'])
+  run(['top', '-o', '%MEM', '-b', '-n', '1'])
   run(['go', 'install'], cwd=os.path.join(vttop, 'go', 'cmd', name))
 
 # binary management: returns the full path for a binary
