@@ -3,30 +3,20 @@ env:
   global:
     - MYSQL_FLAVOR=MariaDB
   matrix:
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
-    - MAKE_TARGET=small_integration_test
+    - RUN=1
+    - RUN=2
+    - RUN=3
+    - RUN=4
+    - RUN=5
+    - RUN=6
+    - RUN=7
+    - RUN=8
+    - RUN=9
+    - RUN=10
 before_install:
   - bash -v travis/dependencies.sh
 install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-  - travis_retry make $MAKE_TARGET
+  - travis_retry make small_integration_test 
