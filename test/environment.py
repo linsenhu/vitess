@@ -53,9 +53,9 @@ def setup():
   global tmproot
   try:
     os.makedirs(tmproot)
-  except OSError:
+  except OSError, e:
     # directory already exists
-    pass
+    raise e
 
 # port management: reserve count consecutive ports, returns the first one
 def reserve_ports(count):
