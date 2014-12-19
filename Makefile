@@ -77,11 +77,11 @@ site_integration_test_files = \
 small_integration_test_files = \
 	keyrange_test.py \
 	mysqlctl.py \
-	sharded.py \
 	vertical_split.py \
 	secure.py \
 	vertical_split_vtgate.py \
 	binlog.py \
+	sharded.py \
 	clone.py
 
 medium_integration_test_files = \
