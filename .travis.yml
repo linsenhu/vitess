@@ -11,6 +11,13 @@ env:
     - TEST=binlog.py
     - TEST=sharded.py
     - TEST=clone.py
+    - TEST=resharding_bytes.py
+    - TEST=resharding.py
+    - TEST=schema.py
+    - TEST=initial_sharding_bytes.py
+    - TEST=initial_sharding.py
+    - TEST=keyspace_test.py
+    - TEST=update_stream.py
 before_install:
   - bash -v travis/dependencies.sh
 install:
