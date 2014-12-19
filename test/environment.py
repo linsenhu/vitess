@@ -75,6 +75,8 @@ def run(args, raise_on_error=True, **kargs):
                             stderr=subprocess.PIPE,
                             **kargs)
     stdout, stderr = proc.communicate()
+    print stdout
+    print stderr
   except Exception as e:
     raise Exception('Command failed', e, args)
 
