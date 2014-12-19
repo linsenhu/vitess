@@ -3,20 +3,18 @@ env:
   global:
     - MYSQL_FLAVOR=MariaDB
   matrix:
-    - RUN=1
-    - RUN=2
-    - RUN=3
-    - RUN=4
-    - RUN=5
-    - RUN=6
-    - RUN=7
-    - RUN=8
-    - RUN=9
-    - RUN=10
+    - TEST=vertical_split.py
+    - TEST=keyrange_test.py
+    - TEST=mysqlctl.py
+    - TEST=secure.py
+    - TEST=vertical_split_vtgate.py
+    - TEST=binlog.py
+    - TEST=sharded.py
+    - TEST=clone.py
 before_install:
   - bash -v travis/dependencies.sh
 install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-  - travis_retry make small_integration_test 
+  - travis_retry python test/$TEST
