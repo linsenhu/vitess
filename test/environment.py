@@ -93,6 +93,7 @@ def prog_compile(name):
     return
   compiled_progs.append(name)
   logging.debug('Compiling %s', name)
+  run(['top'])
   run(['go', 'install'], cwd=os.path.join(vttop, 'go', 'cmd', name))
 
 # binary management: returns the full path for a binary
