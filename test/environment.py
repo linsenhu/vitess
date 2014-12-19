@@ -5,6 +5,7 @@ import logging
 import os
 import socket
 import subprocess
+import shutil
 
 # Import the topo implementations that you want registered as options for the
 # --topo-server-flavor flag.
@@ -54,8 +55,8 @@ def setup():
   try:
     os.makedirs(tmproot)
   except OSError, e:
-    # directory already exists
-    raise e
+    shutil.rmtree(tmproot)
+    os.makedirs(tmproot)
 
 # port management: reserve count consecutive ports, returns the first one
 def reserve_ports(count):
