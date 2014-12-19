@@ -75,9 +75,9 @@ site_integration_test_files = \
 # - medium: 30 secs - 1 min
 # - large: over 1 min
 small_integration_test_files = \
+	vertical_split.py \
 	keyrange_test.py \
 	mysqlctl.py \
-	vertical_split.py \
 	secure.py \
 	vertical_split_vtgate.py \
 	binlog.py \
