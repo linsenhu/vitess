@@ -145,9 +145,8 @@ def setup_sharded_keyspace():
 
   utils.check_srv_keyspace('test_nj', SHARDED_KEYSPACE,
                            'Partitions(master): -80 80-\n' +
-                           'Partitions(rdonly): -80 80-\n' +
                            'Partitions(replica): -80 80-\n' +
-                           'TabletTypes: master,rdonly,replica')
+                           'TabletTypes: master,replica')
 
 
 def setup_unsharded_keyspace():
