@@ -4,13 +4,7 @@ env:
     - MYSQL_FLAVOR=MariaDB
   matrix:
     - TEST=vertical_split.py
-    - TEST=keyrange_test.py
-    - TEST=mysqlctl.py
-    - TEST=secure.py
     - TEST=vertical_split_vtgate.py
-    - TEST=binlog.py
-    - TEST=sharded.py
-    - TEST=clone.py
     - TEST=resharding_bytes.py
     - TEST=resharding.py
     - TEST=schema.py
