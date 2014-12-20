@@ -75,8 +75,6 @@ def run(args, raise_on_error=True, **kargs):
                             stderr=subprocess.PIPE,
                             **kargs)
     stdout, stderr = proc.communicate()
-    print stdout
-    print stderr
   except Exception as e:
     raise Exception('Command failed', e, args)
 
@@ -95,8 +93,6 @@ def prog_compile(name):
     return
   compiled_progs.append(name)
   logging.debug('Compiling %s', name)
-  run(['cat', '/proc/meminfo'])
-  run(['top', '-b', '-n', '1'])
   run(['go', 'install'], cwd=os.path.join(vttop, 'go', 'cmd', name))
 
 # binary management: returns the full path for a binary
