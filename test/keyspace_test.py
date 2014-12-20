@@ -178,7 +178,7 @@ def setup_unsharded_keyspace():
                            'TabletTypes: master,replica')
 
 
-ALL_DB_TYPES = ['master', 'replica', 'rdonly']
+ALL_DB_TYPES = ['master', 'replica'] 
 
 class TestKeyspace(unittest.TestCase):
   def _read_keyspace(self, keyspace_name):
