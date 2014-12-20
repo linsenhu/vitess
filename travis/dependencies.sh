@@ -14,7 +14,7 @@ sudo apt-get update
 
 # Install New relic
 sudo apt-get install newrelic-sysmond
-nrsysmond-config --set license_key=NEWRELIC_LICENSE_KEY
+nrsysmond-config --set license_key=$NEWRELIC_LICENSE_KEY
 sudo /etc/init.d/newrelic-sysmond start
 
 # Remove pre-installed mysql
