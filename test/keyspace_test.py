@@ -174,9 +174,8 @@ def setup_unsharded_keyspace():
 
   utils.check_srv_keyspace('test_nj', UNSHARDED_KEYSPACE,
                            'Partitions(master): -\n' +
-                           'Partitions(rdonly): -\n' +
                            'Partitions(replica): -\n' +
-                           'TabletTypes: master,rdonly,replica')
+                           'TabletTypes: master,replica')
 
 
 ALL_DB_TYPES = ['master', 'replica', 'rdonly']
