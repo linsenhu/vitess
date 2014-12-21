@@ -3,7 +3,6 @@
 import json
 import logging
 import os
-import random
 import socket
 import subprocess
 import shutil
@@ -34,7 +33,7 @@ tmproot = os.path.join(vtdataroot, 'tmp')
 vtlogroot = tmproot
 
 # where to start allocating ports from
-vtportstart = int(os.environ.get('VTPORTSTART', str(random.randint(32768, 60000))))
+vtportstart = int(os.environ.get('VTPORTSTART', '6700'))
 
 # url in which binaries export their status.
 status_url = '/debug/status'

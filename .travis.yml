@@ -3,28 +3,17 @@ env:
   global:
     - MYSQL_FLAVOR=MariaDB
   matrix:
-          #    - TEST=vertical_split.py
-          #    - TEST=vertical_split_vtgate.py
-          #    - TEST=initial_sharding.py
-          #    - TEST=initial_sharding_bytes.py
-          #    - TEST=update_stream.py
-          #    - TEST=resharding.py
-          #    - TEST=resharding_bytes.py
-  - RUN=1
-  - RUN=2
-  - RUN=3
-  - RUN=4
-  - RUN=5
-  - RUN=6
-  - RUN=7
-  - RUN=8
-  - RUN=9
-  - RUN=10
+    - MAKE_TARGET=unit_test
+    - MAKE_TARGET=queryservice_test
+    - MAKE_TARGET=small_integration_test
+    - MAKE_TARGET=medium_integration_test
+    - MAKE_TARGET=large_integration_test
+    - MAKE_TARGET=java_vtgate_client_test
+    - MAKE_TARGET=unit_test_goveralls
 before_install:
   - bash -v travis/dependencies.sh
 install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-  - travis_retry make small_integration_test
-    #  - travis_retry python test/vertical_split.py
+  - travis_retry make $MAKE_TARGET

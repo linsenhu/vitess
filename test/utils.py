@@ -453,7 +453,6 @@ def run_vtworker(clargs, log_level='', auto_log=False, expect_fail=False, **kwar
       log_level='WARNING'
     else:
       log_level='ERROR'
-  log_level='INFO'
   if log_level:
     args.append('--stderrthreshold=%s' % log_level)
 
