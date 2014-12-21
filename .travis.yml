@@ -3,19 +3,25 @@ env:
   global:
     - MYSQL_FLAVOR=MariaDB
   matrix:
-    - TEST=vertical_split.py
-    - TEST=vertical_split_vtgate.py
-    - TEST=initial_sharding.py
-    - TEST=initial_sharding_bytes.py
-    - TEST=update_stream.py
-    - TEST=schema.py
-    - TEST=keyspace_test.py
-    - TEST=resharding.py
-    - TEST=resharding_bytes.py
+          #    - TEST=vertical_split.py
+          #    - TEST=vertical_split_vtgate.py
+          #    - TEST=initial_sharding.py
+          #    - TEST=initial_sharding_bytes.py
+          #    - TEST=update_stream.py
+          #    - TEST=schema.py
+          #    - TEST=keyspace_test.py
+          #    - TEST=resharding.py
+          #    - TEST=resharding_bytes.py
+  - RUN=1
+  - RUN=2
+  - RUN=3
+  - RUN=4
+  - RUN=5
 before_install:
   - bash -v travis/dependencies.sh
 install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-  - travis_retry python test/$TEST
+  - travis_retry make small_integration_test
+    #  - travis_retry python test/$TEST
