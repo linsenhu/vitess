@@ -81,9 +81,9 @@ small_integration_test_files = \
 	keyspace_test.py \
 	keyrange_test.py \
 	mysqlctl.py \
+	sharded.py \
 	secure.py \
 	binlog.py \
-	sharded.py \
 	clone.py
 
 medium_integration_test_files = \
@@ -99,8 +99,8 @@ large_integration_test_files = \
 # The following tests are considered too flaky to be included
 # in the continous integration test suites
 ci_skip_integration_test_files = \
-	resharding.py \
 	resharding_bytes.py \
+	resharding.py \
 	initial_sharding.py \
 	initial_sharding_bytes.py \
 	update_stream.py
