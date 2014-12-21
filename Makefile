@@ -75,6 +75,7 @@ site_integration_test_files = \
 # - medium: 30 secs - 1 min
 # - large: over 1 min
 small_integration_test_files = \
+	schema.py \
 	keyspace_test.py \
 	keyrange_test.py \
 	mysqlctl.py \
@@ -96,7 +97,6 @@ large_integration_test_files = \
 # The following tests are considered too flaky to be included
 # in the continous integration test suites
 ci_skip_integration_test_files = \
-	schema.py \
 	vertical_split.py \
 	vertical_split_vtgate.py \
 	resharding.py \
