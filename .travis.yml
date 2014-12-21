@@ -8,7 +8,6 @@ env:
           #    - TEST=initial_sharding.py
           #    - TEST=initial_sharding_bytes.py
           #    - TEST=update_stream.py
-          #    - TEST=schema.py
           #    - TEST=keyspace_test.py
           #    - TEST=resharding.py
           #    - TEST=resharding_bytes.py
@@ -28,5 +27,5 @@ install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-  - travis_retry make small_integration_test
-    #  - travis_retry python test/schema.py
+    #  - travis_retry make small_integration_test
+  - travis_retry python test/resharding.py
