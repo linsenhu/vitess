@@ -25,6 +25,7 @@ client_type = TABLET
 
 # source keyspace, with 4 tables
 source_master = tablet.Tablet()
+source_replica = tablet.Tablet()
 source_rdonly1 = tablet.Tablet()
 source_rdonly2 = tablet.Tablet()
 
@@ -40,6 +41,7 @@ def setUpModule():
 
     setup_procs = [
         source_master.init_mysql(),
+        source_replica.init_mysql(),
         source_rdonly1.init_mysql(),
         source_rdonly2.init_mysql(),
         destination_master.init_mysql(),
@@ -60,6 +62,7 @@ def tearDownModule():
 
   teardown_procs = [
         source_master.teardown_mysql(),
+        source_replica.teardown_mysql(),
         source_rdonly1.teardown_mysql(),
         source_rdonly2.teardown_mysql(),
         destination_master.teardown_mysql(),
@@ -74,6 +77,7 @@ def tearDownModule():
   utils.remove_tmp_files()
 
   source_master.remove_tree()
+  source_replica.remove_tree()
   source_rdonly1.remove_tree()
   source_rdonly2.remove_tree()
   destination_master.remove_tree()
@@ -248,6 +252,7 @@ index by_msg (msg)
                      '--served_from', 'master:source_keyspace,replica:source_keyspace,rdonly:source_keyspace',
                      'destination_keyspace'])
     source_master.init_tablet('master', 'source_keyspace', '0')
+    source_replica.init_tablet('replica', 'source_keyspace', '0')
     source_rdonly1.init_tablet('rdonly', 'source_keyspace', '0')
     source_rdonly2.init_tablet('rdonly', 'source_keyspace', '0')
 
@@ -273,7 +278,7 @@ index by_msg (msg)
                              'ServedFrom(replica): source_keyspace\n')
 
     # create databases so vttablet can start behaving normally
-    for t in [source_master, source_rdonly1, source_rdonly2]:
+    for t in [source_master, source_replica, source_rdonly1, source_rdonly2]:
       t.create_db('vt_source_keyspace')
       t.start_vttablet(wait_for_state=None)
     destination_master.start_vttablet(wait_for_state=None,
@@ -282,7 +287,7 @@ index by_msg (msg)
       t.start_vttablet(wait_for_state=None)
 
     # wait for the tablets
-    for t in [source_master, source_rdonly1, source_rdonly2]:
+    for t in [source_master, source_replica, source_rdonly1, source_rdonly2]:
       t.wait_for_vttablet_state('SERVING')
     for t in [destination_master, destination_replica, destination_rdonly1,
               destination_rdonly2]:
@@ -353,10 +358,10 @@ index by_msg (msg)
     moving1_first_add1 = self._insert_values('moving1', 100)
     staying1_first_add1 = self._insert_values('staying1', 100)
     moving2_first_add1 = self._insert_values('moving2', 100)
-    #self._check_values_timeout(destination_master, 'vt_destination_keyspace',
-    #                           'moving1', moving1_first_add1, 1000)
-    #self._check_values_timeout(destination_master, 'vt_destination_keyspace',
-    #                           'moving2', moving2_first_add1, 1000)
+    self._check_values_timeout(destination_master, 'vt_destination_keyspace',
+                               'moving1', moving1_first_add1, 100)
+    self._check_values_timeout(destination_master, 'vt_destination_keyspace',
+                               'moving2', moving2_first_add1, 100)
 
     # use the vtworker checker to compare the data
     logging.debug("Running vtworker VerticalSplitDiff")
@@ -398,6 +403,7 @@ index by_msg (msg)
                              'ServedFrom(rdonly): source_keyspace\n' +
                              'ServedFrom(replica): source_keyspace\n')
     self._check_blacklisted_tables(source_master, None)
+    self._check_blacklisted_tables(source_replica, None)
     self._check_blacklisted_tables(source_rdonly1, None)
     self._check_blacklisted_tables(source_rdonly2, None)
 
@@ -424,6 +430,7 @@ index by_msg (msg)
     self._check_srv_keyspace('ServedFrom(master): source_keyspace\n' +
                              'ServedFrom(replica): source_keyspace\n')
     self._check_blacklisted_tables(source_master, None)
+    self._check_blacklisted_tables(source_replica, None)
     self._check_blacklisted_tables(source_rdonly1, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly2, ['moving.*', 'view1'])
     self._check_client_conn_redirection(
@@ -435,6 +442,7 @@ index by_msg (msg)
                     auto_log=True)
     self._check_srv_keyspace('ServedFrom(master): source_keyspace\n')
     self._check_blacklisted_tables(source_master, None)
+    self._check_blacklisted_tables(source_replica, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly1, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly2, ['moving.*', 'view1'])
     self._check_client_conn_redirection('source_keyspace', 'destination_keyspace', ['replica', 'rdonly'], ['master'], ['moving1', 'moving2'])
@@ -445,12 +453,14 @@ index by_msg (msg)
     self._check_srv_keyspace('ServedFrom(master): source_keyspace\n' +
                              'ServedFrom(replica): source_keyspace\n')
     self._check_blacklisted_tables(source_master, None)
+    self._check_blacklisted_tables(source_replica, None)
     self._check_blacklisted_tables(source_rdonly1, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly2, ['moving.*', 'view1'])
     utils.run_vtctl(['MigrateServedFrom', 'destination_keyspace/0', 'replica'],
                     auto_log=True)
     self._check_srv_keyspace('ServedFrom(master): source_keyspace\n')
     self._check_blacklisted_tables(source_master, None)
+    self._check_blacklisted_tables(source_replica, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly1, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly2, ['moving.*', 'view1'])
     self._check_client_conn_redirection(
@@ -462,6 +472,7 @@ index by_msg (msg)
                     auto_log=True)
     self._check_srv_keyspace('')
     self._check_blacklisted_tables(source_master, ['moving.*', 'view1'])
+    self._check_blacklisted_tables(source_replica, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly1, ['moving.*', 'view1'])
     self._check_blacklisted_tables(source_rdonly2, ['moving.*', 'view1'])
     self._check_client_conn_redirection(
@@ -497,7 +508,7 @@ index by_msg (msg)
     self._check_stats()
 
     # kill everything
-    tablet.kill_tablets([source_master, source_rdonly1,
+    tablet.kill_tablets([source_master, source_replica, source_rdonly1,
                          source_rdonly2, destination_master,
                          destination_replica, destination_rdonly1,
                          destination_rdonly2])
