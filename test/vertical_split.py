@@ -354,9 +354,9 @@ index by_msg (msg)
     staying1_first_add1 = self._insert_values('staying1', 100)
     moving2_first_add1 = self._insert_values('moving2', 100)
     self._check_values_timeout(destination_master, 'vt_destination_keyspace',
-                               'moving1', moving1_first_add1, 100)
+                               'moving1', moving1_first_add1, 1000)
     self._check_values_timeout(destination_master, 'vt_destination_keyspace',
-                               'moving2', moving2_first_add1, 100)
+                               'moving2', moving2_first_add1, 1000)
 
     # use the vtworker checker to compare the data
     logging.debug("Running vtworker VerticalSplitDiff")
