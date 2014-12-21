@@ -23,5 +23,5 @@ install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-  - travis_retry make small_integration_test
-    #  - travis_retry python test/$TEST
+    #  - travis_retry make small_integration_test
+  - travis_retry python test/schema.py
