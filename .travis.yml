@@ -8,7 +8,6 @@ env:
           #    - TEST=initial_sharding.py
           #    - TEST=initial_sharding_bytes.py
           #    - TEST=update_stream.py
-          #    - TEST=keyspace_test.py
           #    - TEST=resharding.py
           #    - TEST=resharding_bytes.py
   - RUN=1
@@ -29,3 +28,4 @@ script:
   - source dev.env
     #  - travis_retry make small_integration_test
   - travis_retry python test/vertical_split.py
+  - travis_retry python test/initial_sharding.py
