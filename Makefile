@@ -77,11 +77,9 @@ site_integration_test_files = \
 small_integration_test_files = \
 	keyspace_test.py \
 	schema.py \
-	vertical_split.py \
 	keyrange_test.py \
 	mysqlctl.py \
 	secure.py \
-	vertical_split_vtgate.py \
 	binlog.py \
 	sharded.py \
 	clone.py
@@ -99,10 +97,12 @@ large_integration_test_files = \
 # The following tests are considered too flaky to be included
 # in the continous integration test suites
 ci_skip_integration_test_files = \
-	resharding_bytes.py \
+	vertical_split.py \
+	vertical_split_vtgate.py \
 	resharding.py \
-	initial_sharding_bytes.py \
+	resharding_bytes.py \
 	initial_sharding.py \
+	initial_sharding_bytes.py \
 	update_stream.py
 
 .ONESHELL:
