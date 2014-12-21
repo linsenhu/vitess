@@ -26,6 +26,5 @@ install:
   - bash -v bootstrap.sh
 script:
   - source dev.env
-    #  - travis_retry make small_integration_test
-  - travis_retry python test/vertical_split.py
-  - travis_retry python test/initial_sharding.py
+  - travis_retry make small_integration_test
+    #  - travis_retry python test/vertical_split.py
