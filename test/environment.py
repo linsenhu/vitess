@@ -54,7 +54,8 @@ def setup():
   global tmproot
   try:
     os.makedirs(tmproot)
-  except OSError, e:
+  except OSError:
+    # directory already exists, delete and try again
     shutil.rmtree(tmproot)
     os.makedirs(tmproot)
 
